@@ -59,8 +59,7 @@ COPY --chown=www:www . /var/www
 
 # Change current user to www
 USER www
-RUN php artisan cache:clear \
-    composer install && php artisan key:generate && php artisan config:cache
+RUN composer install && php artisan key:generate && php artisan config:cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
