@@ -12,7 +12,7 @@
 # RUN composer install
 
 FROM php:8.0.2-fpm
-COPY composer.lock and composer.json
+COPY composer.*
 # COPY --from=build /app /var/www/
 # COPY composer.json /var/www/
 
