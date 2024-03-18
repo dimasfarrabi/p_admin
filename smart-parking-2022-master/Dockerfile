@@ -1,20 +1,20 @@
-# FROM composer:2.3 as build
-# COPY composer.json artisan /app/
-# WORKDIR /app
+FROM composer:2.3 as build
+COPY composer.json artisan /app/
+WORKDIR /app
 
-# run apk update && apk add oniguruma-dev \
-#    zlib-dev \
-#    libzip-dev \
-#    libpng-dev
-# # RUN docker-php-ext-configure zip --with-libzip
-# RUN docker-php-ext-install pdo_mysql exif pcntl gd zip mbstring
-# RUN chmod +x artisan
-# RUN composer install
+run apk update && apk add oniguruma-dev \
+   zlib-dev \
+   libzip-dev \
+   libpng-dev
+RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-install pdo_mysql exif pcntl gd zip mbstring
+RUN chmod +x artisan
+RUN composer install
 
 FROM php:8.0.2-fpm
-COPY composer.* and composer.json
-# COPY --from=build /app /var/www/
-# COPY composer.json /var/www/
+COPY composer.lock and composer.json
+COPY --from=build /app /var/www/
+COPY composer.json /var/www/
 
 # Set working directory
 WORKDIR /var/www
@@ -59,7 +59,7 @@ COPY --chown=www:www . /var/www
 
 # Change current user to www
 USER www
-RUN composer update && php artisan key:generate && php artisan config:cache
+RUN composer install && php artisan key:generate && php artisan config:cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
