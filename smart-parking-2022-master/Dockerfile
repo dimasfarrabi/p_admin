@@ -6,7 +6,7 @@ run apk update && apk add oniguruma-dev \
    zlib-dev \
    libzip-dev \
    libpng-dev
-RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-configure zip
 RUN docker-php-ext-install pdo_mysql exif pcntl gd zip mbstring
 RUN chmod +x artisan
 RUN composer install
