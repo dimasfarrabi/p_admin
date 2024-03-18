@@ -13,7 +13,7 @@
 
 FROM php:8.0.2-fpm
 # Copy composer.lock and composer.json
-#  COPY --from=build /app /var/www/
+COPY --from=build /app /var/www/
 COPY composer.json /var/www/
 
 # Set working directory
