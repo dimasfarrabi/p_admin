@@ -59,7 +59,9 @@ COPY --chown=www:www . /var/www
 
 # Change current user to www
 USER www
-RUN composer install && php artisan key:generate && php artisan config:cache
+RUN sudo touch composer.lock \
+    sudo chown -R $USER ./composer.lock \
+    composer update && php artisan key:generate && php artisan config:cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
